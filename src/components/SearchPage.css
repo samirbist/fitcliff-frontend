@@ -1,0 +1,87 @@
+/* SearchPage.css */
+.search-page {
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h2, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.field-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.field-column {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.field-column:last-child {
+    margin-right: 0;
+}
+
+.field-column label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.field-column input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.search-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #2980b9;
+}
+
+.results-section {
+    margin-top: 20px;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: #f2f2f2;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}

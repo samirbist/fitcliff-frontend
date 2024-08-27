@@ -1,0 +1,72 @@
+.create-customer-form {
+  max-width: 800px;
+  margin: auto;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.payment-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px; /* Ensure minimum width */
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.remove-button {
+  flex-basis: 100%; /* Full width for remove button */
+  margin-top: 10px;
+  text-align: right;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-payment-button {
+  background-color: #007BFF;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+}
+
+button[type="button"] {
+  background-color: #f44336; /* Different color for remove button */
+}
