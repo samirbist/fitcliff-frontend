@@ -59,14 +59,25 @@ button {
 }
 
 .add-payment-button {
-  background-color: #007BFF;
+  display: block;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .submit-button {
-  background-color: #4CAF50;
+  display: block;
+  margin-top: 20px;
 }
 
 button[type="button"] {
   background-color: #f44336; /* Different color for remove button */
+}
+
+.form-group input[type="file"] {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.payments-container {
+  margin-bottom: 20px;
 }

@@ -14,6 +14,8 @@ const CreateCustomer = () => {
     joinDate: "",
     birthdate: "",
     address: "",
+    profileImage: null, // New field for profile image
+    documentIdImage: null, // New field for document ID image
     payments: [
       {
         date: "",
@@ -34,6 +36,8 @@ const CreateCustomer = () => {
     joinDate: Yup.date().required("Join date is required"),
     birthdate: Yup.date().required("Birthdate is required"),
     address: Yup.string().required("Address is required"),
+    profileImage: Yup.mixed().required("Profile image is required"),
+    documentIdImage: Yup.mixed().required("Document ID image is required"),
     payments: Yup.array().of(
       Yup.object().shape({
         date: Yup.date().required("Date is required"),
@@ -46,13 +50,41 @@ const CreateCustomer = () => {
 
   const onSubmit = (values) => {
     console.log("Form data", values);
+
+    // Create FormData to handle file uploads
+    const formData = new FormData();
+    formData.append("firstname", values.firstname);
+    formData.append("lastname", values.lastname);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    formData.append("gender", values.gender);
+    formData.append("regDate", values.regDate);
+    formData.append("joinDate", values.joinDate);
+    formData.append("birthdate", values.birthdate);
+    formData.append("address", values.address);
+    formData.append("profileImage", values.profileImage); // Add profile image to form data
+    formData.append("documentIdImage", values.documentIdImage); // Add document ID image to form data
+    formData.append("payments", JSON.stringify(values.payments)); // Serialize payments array
+
+    // Perform your form submission here, for example, using Axios:
+    // axios.post('/api/customers', formData)
+    // .then(response => {
+    //   // handle success
+    // })
+    // .catch(error => {
+    //   // handle error
+    // });
   };
 
   return (
     <div className="create-customer-form">
       <h2>Create Customer</h2>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-        {({ values }) => (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {({ values, setFieldValue }) => (
           <Form>
             <div className="form-row">
               <div className="form-group">
@@ -110,46 +142,83 @@ const CreateCustomer = () => {
               <ErrorMessage name="address" component="div" className="error" />
             </div>
 
+            {/* New Fields for File Uploads */}
+            <div className="form-group">
+              <label htmlFor="profileImage">Profile Image</label>
+              <input
+                type="file"
+                id="profileImage"
+                name="profileImage"
+                onChange={(event) => {
+                  setFieldValue("profileImage", event.currentTarget.files[0]);
+                }}
+              />
+              <ErrorMessage name="profileImage" component="div" className="error" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="documentIdImage">Document ID Image</label>
+              <input
+                type="file"
+                id="documentIdImage"
+                name="documentIdImage"
+                onChange={(event) => {
+                  setFieldValue("documentIdImage", event.currentTarget.files[0]);
+                }}
+              />
+              <ErrorMessage name="documentIdImage" component="div" className="error" />
+            </div>
+
             {/* Payment Details Section */}
             <h3>Payment Details</h3>
             <FieldArray name="payments">
               {({ remove, push }) => (
                 <>
-                  {values.payments.map((payment, index) => (
-                    <div key={index} className="payment-row">
-                      <div className="form-group">
-                        <label htmlFor={`payments.${index}.date`}>Date</label>
-                        <Field type="date" name={`payments.${index}.date`} />
-                        <ErrorMessage name={`payments.${index}.date`} component="div" className="error" />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor={`payments.${index}.paymentAmount`}>Payment Amount</label>
-                        <Field type="number" name={`payments.${index}.paymentAmount`} />
-                        <ErrorMessage name={`payments.${index}.paymentAmount`} component="div" className="error" />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor={`payments.${index}.pendingAmount`}>Pending Amount</label>
-                        <Field type="number" name={`payments.${index}.pendingAmount`} />
-                        <ErrorMessage name={`payments.${index}.pendingAmount`} component="div" className="error" />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor={`payments.${index}.paymentType`}>Payment Type</label>
-                        <Field as="select" name={`payments.${index}.paymentType`}>
-                          <option value="">Select</option>
-                          <option value="credit">Credit</option>
-                          <option value="debit">Debit</option>
-                          <option value="cash">Cash</option>
-                        </Field>
-                        <ErrorMessage name={`payments.${index}.paymentType`} component="div" className="error" />
-                      </div>
-                      <div className="form-group remove-button">
-                        <button type="button" onClick={() => remove(index)}>
+                  <div className="payments-container">
+                    {values.payments.map((payment, index) => (
+                      <div key={index} className="payment-row">
+                        <div className="form-group">
+                          <label htmlFor={`payments.${index}.date`}>Date</label>
+                          <Field type="date" name={`payments.${index}.date`} />
+                          <ErrorMessage name={`payments.${index}.date`} component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor={`payments.${index}.paymentAmount`}>Payment Amount</label>
+                          <Field type="number" name={`payments.${index}.paymentAmount`} />
+                          <ErrorMessage name={`payments.${index}.paymentAmount`} component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor={`payments.${index}.pendingAmount`}>Pending Amount</label>
+                          <Field type="number" name={`payments.${index}.pendingAmount`} />
+                          <ErrorMessage name={`payments.${index}.pendingAmount`} component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor={`payments.${index}.paymentType`}>Payment Type</label>
+                          <Field as="select" name={`payments.${index}.paymentType`}>
+                            <option value="">Select</option>
+                            <option value="credit">Credit</option>
+                            <option value="debit">Debit</option>
+                            <option value="cash">Cash</option>
+                          </Field>
+                          <ErrorMessage name={`payments.${index}.paymentType`} component="div" className="error" />
+                        </div>
+                        <button
+                          type="button"
+                          className="remove-payment-button"
+                          onClick={() => remove(index)}
+                        >
                           Remove
                         </button>
                       </div>
-                    </div>
-                  ))}
-                  <button type="button" className="add-payment-button" onClick={() => push({ date: "", paymentAmount: "", pendingAmount: "", paymentType: "" })}>
+                    ))}
+                  </div>
+
+                  {/* Add Payment Button */}
+                  <button
+                    type="button"
+                    className="add-payment-button"
+                    onClick={() => push({ date: "", paymentAmount: "", pendingAmount: "", paymentType: "" })}
+                  >
                     Add Payment
                   </button>
                 </>
