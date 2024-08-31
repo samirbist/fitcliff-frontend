@@ -1,18 +1,42 @@
-// SideMenu.js
-import React from "react";
-import "./SideMenu.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import './SideMenu.css';
 
-const SideMenu = ({ setActivePage }) => {
+function SideMenu() {
+  const [activePage, setActivePage] = useState('SearchPage');
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleClick = (page) => {
+    setActivePage(page);
+    // Navigate to the selected page
+    if (page === 'CreateCustomer') {
+      navigate('/create-customer');
+    } else if (page === 'SearchPage') {
+      navigate('/search');
+    }
+    // Add more conditions for other pages if needed
+  };
+
   return (
     <div className="side-menu">
       <ul>
-        <li onClick={() => setActivePage("createCustomer")}>Create Customer</li>
-        <li onClick={() => setActivePage("searchPage")}>Search Customers</li>
-        <li onClick={() => setActivePage("updateCustomer")}>Update Customer</li>
-        <li onClick={() => setActivePage("createGroup")}>Create Group</li>
+        
+        <li
+          className={activePage === 'SearchPage' ? 'active' : ''}
+          onClick={() => handleClick('SearchPage')}
+        >
+          Search Customers
+        </li>
+        <li
+          className={activePage === 'CreateCustomer' ? 'active' : ''}
+          onClick={() => handleClick('CreateCustomer')}
+        >
+          Create Customer
+        </li>
+        {/* Add more menu items as needed */}
       </ul>
     </div>
   );
-};
+}
 
 export default SideMenu;

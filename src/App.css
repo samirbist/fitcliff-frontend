@@ -3,10 +3,14 @@
 }
 
 .side-menu {
-  width: 200px;
+  width: 250px;
   background-color: #333;
   color: white;
   min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
 }
 
 .side-menu ul {
@@ -17,6 +21,7 @@
 .side-menu li {
   padding: 15px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .side-menu li:hover {
@@ -26,4 +31,7 @@
 .content {
   flex: 1;
   padding: 20px;
+  margin-left: 250px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
 }

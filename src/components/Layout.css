@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  /* Ensure the layout takes full viewport height */
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  flex: 1;
+  background-color: #f9f9f9;
+  /* Light background for content area */
+  overflow-y: auto;
+  /* Allow scrolling if content exceeds viewport height */
+}

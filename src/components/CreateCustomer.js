@@ -1,7 +1,70 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import "./CreateCustomer.css";
+
+const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
+
+// Function to get JWT token
+const getAuthToken = () => {
+  // Replace with the actual method to retrieve the token
+  return localStorage.getItem('jwtToken');
+};
+
+// Function to upload document
+const uploadDocument = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await axios.post(`${API_BASE_URL}/admin/documentId`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${getAuthToken()}`,
+      },
+    });
+    return response.data; // Return document ID or other relevant data
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    throw error;
+  }
+};
+
+// Function to upload image
+const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await axios.post(`${API_BASE_URL}/admin/image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${getAuthToken()}`,
+      },
+    });
+    return response.data; // Return image ID or other relevant data
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+};
+
+// Function to create a new customer
+const createCustomer = async (customerData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/admin/customer`, customerData, {
+      headers: {
+        'Authorization': `Bearer ${getAuthToken()}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating customer:', error);
+    throw error;
+  }
+};
 
 const CreateCustomer = () => {
   const initialValues = {
@@ -14,8 +77,8 @@ const CreateCustomer = () => {
     joinDate: "",
     birthdate: "",
     address: "",
-    profileImage: null, // New field for profile image
-    documentIdImage: null, // New field for document ID image
+    profileImage: null,
+    documentIdImage: null,
     payments: [
       {
         date: "",
@@ -48,32 +111,35 @@ const CreateCustomer = () => {
     ),
   });
 
-  const onSubmit = (values) => {
-    console.log("Form data", values);
+  const onSubmit = async (values) => {
+    try {
+      // Upload document and image
+      const documentResponse = await uploadDocument(values.documentIdImage);
+      const imageResponse = await uploadImage(values.profileImage);
 
-    // Create FormData to handle file uploads
-    const formData = new FormData();
-    formData.append("firstname", values.firstname);
-    formData.append("lastname", values.lastname);
-    formData.append("email", values.email);
-    formData.append("phone", values.phone);
-    formData.append("gender", values.gender);
-    formData.append("regDate", values.regDate);
-    formData.append("joinDate", values.joinDate);
-    formData.append("birthdate", values.birthdate);
-    formData.append("address", values.address);
-    formData.append("profileImage", values.profileImage); // Add profile image to form data
-    formData.append("documentIdImage", values.documentIdImage); // Add document ID image to form data
-    formData.append("payments", JSON.stringify(values.payments)); // Serialize payments array
+      // Prepare customer data with IDs from document and image responses
+      const customerData = {
+        firstname: values.firstname,
+        lastname: values.lastname,
+        email: values.email,
+        phone: values.phone,
+        gender: values.gender,
+        regDate: values.regDate,
+        joinDate: values.joinDate,
+        birthdate: values.birthdate,
+        address: values.address,
+        documentId: documentResponse ? documentResponse.id : null,
+        imageId: imageResponse ? imageResponse.id : null,
+        payments: values.payments,
+      };
 
-    // Perform your form submission here, for example, using Axios:
-    // axios.post('/api/customers', formData)
-    // .then(response => {
-    //   // handle success
-    // })
-    // .catch(error => {
-    //   // handle error
-    // });
+      // Create customer
+      await createCustomer(customerData);
+
+      alert('Customer created successfully!');
+    } catch (error) {
+      alert('Failed to create customer.');
+    }
   };
 
   return (
@@ -176,56 +242,47 @@ const CreateCustomer = () => {
                 <>
                   <div className="payments-container">
                     {values.payments.map((payment, index) => (
-                      <div key={index} className="payment-row">
+                      <div key={index} className="payment-form-row">
                         <div className="form-group">
-                          <label htmlFor={`payments.${index}.date`}>Date</label>
-                          <Field type="date" name={`payments.${index}.date`} />
-                          <ErrorMessage name={`payments.${index}.date`} component="div" className="error" />
+                          <label htmlFor={`payments[${index}].date`}>Date</label>
+                          <Field type="date" name={`payments[${index}].date`} />
+                          <ErrorMessage name={`payments[${index}].date`} component="div" className="error" />
                         </div>
                         <div className="form-group">
-                          <label htmlFor={`payments.${index}.paymentAmount`}>Payment Amount</label>
-                          <Field type="number" name={`payments.${index}.paymentAmount`} />
-                          <ErrorMessage name={`payments.${index}.paymentAmount`} component="div" className="error" />
+                          <label htmlFor={`payments[${index}].paymentAmount`}>Payment Amount</label>
+                          <Field type="number" name={`payments[${index}].paymentAmount`} />
+                          <ErrorMessage name={`payments[${index}].paymentAmount`} component="div" className="error" />
                         </div>
                         <div className="form-group">
-                          <label htmlFor={`payments.${index}.pendingAmount`}>Pending Amount</label>
-                          <Field type="number" name={`payments.${index}.pendingAmount`} />
-                          <ErrorMessage name={`payments.${index}.pendingAmount`} component="div" className="error" />
+                          <label htmlFor={`payments[${index}].pendingAmount`}>Pending Amount</label>
+                          <Field type="number" name={`payments[${index}].pendingAmount`} />
+                          <ErrorMessage name={`payments[${index}].pendingAmount`} component="div" className="error" />
                         </div>
                         <div className="form-group">
-                          <label htmlFor={`payments.${index}.paymentType`}>Payment Type</label>
-                          <Field as="select" name={`payments.${index}.paymentType`}>
+                          <label htmlFor={`payments[${index}].paymentType`}>Payment Type</label>
+                          <Field as="select" name={`payments[${index}].paymentType`}>
                             <option value="">Select</option>
-                            <option value="credit">Credit</option>
-                            <option value="debit">Debit</option>
-                            <option value="cash">Cash</option>
+                            <option value="CASH">CASH</option>
+                            <option value="UPI">UPI</option>
                           </Field>
-                          <ErrorMessage name={`payments.${index}.paymentType`} component="div" className="error" />
+                          <ErrorMessage name={`payments[${index}].paymentType`} component="div" className="error" />
                         </div>
-                        <button
-                          type="button"
-                          className="remove-payment-button"
-                          onClick={() => remove(index)}
-                        >
-                          Remove
-                        </button>
+                        <div className="form-group remove-payment-btn">
+                          <button type="button" onClick={() => remove(index)}>Remove</button>
+                        </div>
                       </div>
                     ))}
                   </div>
-
-                  {/* Add Payment Button */}
-                  <button
-                    type="button"
-                    className="add-payment-button"
-                    onClick={() => push({ date: "", paymentAmount: "", pendingAmount: "", paymentType: "" })}
-                  >
-                    Add Payment
-                  </button>
+                  <div className="form-group add-payment-btn">
+                    <button type="button" onClick={() => push({ date: "", paymentAmount: "", pendingAmount: "", paymentType: "" })}>
+                      Add Payment
+                    </button>
+                  </div>
                 </>
               )}
             </FieldArray>
 
-            <button type="submit" className="submit-button">Create Customer</button>
+            <button type="submit" className="submit-btn">Create Customer</button>
           </Form>
         )}
       </Formik>
