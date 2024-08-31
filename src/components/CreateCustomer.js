@@ -15,6 +15,7 @@ const getAuthToken = () => {
 // Function to upload document
 const uploadDocument = async (file) => {
   const formData = new FormData();
+  formData.append('fileName', file.name); 
   formData.append('file', file);
 
   try {
@@ -34,6 +35,7 @@ const uploadDocument = async (file) => {
 // Function to upload image
 const uploadImage = async (file) => {
   const formData = new FormData();
+  formData.append('fileName', file.name);
   formData.append('file', file);
 
   try {
@@ -180,8 +182,8 @@ const CreateCustomer = () => {
               <label htmlFor="gender">Gender</label>
               <Field as="select" id="gender" name="gender">
                 <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="male">MALE</option>
+                <option value="female">FEMALE</option>
               </Field>
               <ErrorMessage name="gender" component="div" className="error" />
             </div>
