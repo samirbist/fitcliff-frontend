@@ -78,6 +78,22 @@ const fetchGroups = async () => {
 };
 
 const CreateCustomer = () => {
+
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    const loadGroups = async () => {
+      try {
+        const fetchedGroups = await fetchGroups();
+        setGroups(fetchedGroups);
+      } catch (error) {
+        console.error('Failed to fetch groups:', error);
+      }
+    };
+
+    loadGroups();
+  }, []);
+  
   const initialValues = {
     firstname: "",
     lastname: "",
@@ -299,11 +315,20 @@ const CreateCustomer = () => {
                 <Field type="number" id="membershipAmount" name="membershipAmount" />
                 <ErrorMessage name="membershipAmount" component="div" className="error" />
               </div>
+              <div className="form-row">
               <div className="form-group">
                 <label htmlFor="group">Group</label>
-                <Field type="text" id="group" name="group" />
+                <Field as="select" id="group" name="group">
+                  <option value="">Select Group</option>
+                  {groups.map(group => (
+                    <option key={group.id} value={group.id}>
+                      {group.name}
+                    </option>
+                  ))}
+                </Field>
                 <ErrorMessage name="group" component="div" className="error" />
               </div>
+            </div>
             </div>
 
             <FieldArray name="payments">
