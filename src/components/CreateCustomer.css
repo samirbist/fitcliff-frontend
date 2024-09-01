@@ -9,7 +9,7 @@
   margin-bottom: 20px;
 }
 
-.payment-row {
+.payment-form-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -22,7 +22,8 @@
 
 .form-group {
   flex: 1;
-  min-width: 200px; /* Ensure minimum width */
+  min-width: 180px;
+  max-width: 220px;
   margin-right: 10px;
   margin-bottom: 20px;
 }
@@ -32,13 +33,15 @@
   margin-bottom: 5px;
 }
 
-.remove-button {
-  flex-basis: 100%; /* Full width for remove button */
+.remove-payment-btn {
+  flex-basis: 100%;
   margin-top: 10px;
   text-align: right;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
@@ -56,21 +59,37 @@ button {
   border: none;
   cursor: pointer;
   margin-top: 10px;
+  font-size: 0.9em;
+  /* Adjust font size */
 }
 
-.add-payment-button {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.add-phone-btn,
+.remove-phone-btn {
+  background-color: #4CAF50;
+  /* Green for add button */
+  color: white;
+  padding: 4px 8px;
+  /* Smaller padding */
+  border: none;
+  cursor: pointer;
+  font-size: 0.8em;
+  /* Smaller font size */
+  margin-top: 5px;
+  /* Reduced size */
 }
 
-.submit-button {
-  display: block;
-  margin-top: 20px;
+.remove-phone-btn {
+  background-color: #f44336;
+  /* Red for remove button */
+  padding: 4px 8px;
+  /* Smaller padding */
+  font-size: 0.8em;
+  /* Smaller font size */
+  /* Reduced size */
 }
 
 button[type="button"] {
-  background-color: #f44336; /* Different color for remove button */
+  background-color: #f44336;
 }
 
 .form-group input[type="file"] {

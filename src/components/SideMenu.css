@@ -1,38 +1,43 @@
-/* Style for the side menu */
+/* SideMenu.css */
+
 .side-menu {
   width: 250px;
   background-color: #333;
-  color: white;
+  color: #fff;
   padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  overflow-y: auto;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  /* Add subtle shadow for depth */
 }
 
-/* Style for menu items */
-.side-menu ul {
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+  /* Space between the logo and the menu items */
+}
+
+.logo {
+  width: 150px;
+  /* Adjust width as needed */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
-.side-menu li {
-  padding: 15px;
+li {
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  /* Smooth transition for hover effect */
+  color: #ddd;
 }
 
-.side-menu li:hover {
+li.active,
+li:hover {
   background-color: #444;
-  /* Darker background on hover */
-}
-
-.side-menu li.active {
-  background-color: #555;
-  /* Highlight active menu item */
+  color: #fff;
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css'; // Import the CSS file
+import logo from '../assests/fitcliff-logo.jpeg';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -29,6 +30,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <div className="login-logo">
+        <img src={logo} alt="Fitcliff Logo" />
+      </div>
       <div className="login-form">
         <h1>Welcome to Fitcliff</h1>
         <h2>Login</h2>

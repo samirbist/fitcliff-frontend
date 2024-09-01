@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './SideMenu.css';
+import logo from '../assests/fitcliff-logo.jpeg'; 
 
 function SideMenu() {
   const [activePage, setActivePage] = useState('SearchPage');
@@ -19,6 +20,11 @@ function SideMenu() {
 
   return (
     <div className="side-menu">
+       {/* Logo Section */}
+      <div className="logo-container">
+        <img src={logo} alt="Fitcliff Logo" className="logo" />
+      </div>
+
       <ul>
         
         <li
