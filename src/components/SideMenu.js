@@ -14,6 +14,8 @@ function SideMenu() {
       navigate('/create-customer');
     } else if (page === 'SearchPage') {
       navigate('/search');
+    } else if (page === 'CreateGroup') {
+      navigate('/create-group'); // Add navigation for CreateGroup
     }
     // Add more conditions for other pages if needed
   };
@@ -38,6 +40,12 @@ function SideMenu() {
           onClick={() => handleClick('CreateCustomer')}
         >
           Create Customer
+        </li>
+          <li
+          className={activePage === 'CreateGroup' ? 'active' : ''}
+          onClick={() => handleClick('CreateGroup')}
+        >
+          Create Group
         </li>
         {/* Add more menu items as needed */}
       </ul>

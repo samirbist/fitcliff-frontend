@@ -1,120 +1,156 @@
-/* CreateCustomer.css */
-
+/* Container for the entire form */
 .create-customer-form {
-  width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Header styling */
 .create-customer-form h2 {
   text-align: center;
+  color: #333;
   margin-bottom: 20px;
+  font-size: 1.5em;
 }
 
+/* Form row styling */
 .form-row {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
   margin-bottom: 15px;
 }
 
+/* Form group styling */
 .form-group {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-right: 10px;
+  min-width: 220px;
 }
 
+/* Label styling */
 .form-group label {
-  font-weight: bold;
+  display: block;
   margin-bottom: 5px;
+  font-weight: 500;
+  color: #666;
 }
 
+/* Input and select field styling */
 .form-group input,
-.form-group select,
-.form-group .error {
-  padding: 8px;
-  border: 1px solid #ccc;
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 0.875em;
 }
 
+/* File input styling */
 .form-group input[type="file"] {
-  padding: 4px;
+  border: none;
+  padding: 0;
 }
 
+/* Error message styling */
 .error {
-  color: #dc3545;
-  font-size: 12px;
+  color: #e74c3c;
+  font-size: 0.875em;
+  margin-top: 5px;
 }
 
-button {
-  padding: 8px 12px;
-  font-size: 14px;
+/* Button styling */
+.add-phone-btn,
+.remove-phone-btn,
+.add-payment-btn,
+.remove-payment-btn,
+.submit-btn {
+  font-size: 0.75em;
+  padding: 6px 12px;
   border: none;
   border-radius: 4px;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:focus {
-  outline: none;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .add-phone-btn,
 .add-payment-btn {
-  background-color: #007bff;
-  color: white;
-  margin-top: 10px;
-  width: 150px;
-  align-self: flex-end;
+  background-color: #28a745;
+  /* Green */
 }
 
 .remove-phone-btn,
 .remove-payment-btn {
   background-color: #dc3545;
-  color: white;
-  width: 100px;
-  margin-left: 10px;
+  /* Red */
 }
 
 .submit-btn {
-  background-color: #28a745;
-  color: white;
-  width: 200px;
-  align-self: center;
+  background-color: #007bff;
+  /* Blue */
   display: block;
-  margin: 20px auto;
+  width: 100%;
+  margin-top: 20px;
 }
 
-button:hover {
-  opacity: 0.8;
+/* Button hover effects */
+.add-phone-btn:hover,
+.add-payment-btn:hover {
+  background-color: #218838;
+  /* Darker Green */
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.remove-phone-btn:hover,
+.remove-payment-btn:hover {
+  background-color: #c82333;
+  /* Darker Red */
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
+.submit-btn:hover {
+  background-color: #0069d9;
+  /* Darker Blue */
+}
 
-  .form-group {
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
+/* Button active effects */
+.add-phone-btn:active,
+.add-payment-btn:active {
+  transform: scale(0.95);
+}
 
-  .add-phone-btn,
-  .add-payment-btn,
-  .remove-phone-btn,
-  .remove-payment-btn,
-  .submit-btn {
-    width: 100%;
-  }
+.remove-phone-btn:active,
+.remove-payment-btn:active {
+  transform: scale(0.95);
+}
+
+.submit-btn:active {
+  transform: scale(0.95);
+}
+
+/* Select styling */
+.form-group select {
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* File input styling */
+input[type="file"] {
+  padding: 0;
+  border: none;
+}
+
+/* Payment section styling */
+.payment-section {
+  margin-top: 20px;
+}
+
+.payment-section .form-row {
+  flex-direction: column;
+}
+
+.payment-section .form-row .form-group {
+  width: 100%;
 }
