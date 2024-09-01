@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import "./CreateCustomer.css";
+
 
 const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
 
@@ -109,7 +110,7 @@ const CreateCustomer = () => {
     payments: [
       {
         date: "",
-        paymentAmount: "",
+        amount: "",  // Changed from paymentAmount to amount
         pendingAmount: "",
         paymentType: "",
       },
@@ -117,7 +118,7 @@ const CreateCustomer = () => {
     membershipDuration: "",
     membershipType: "",
     membershipAmount: "",
-    group: "",
+    group: null,
   };
 
   const validationSchema = Yup.object({
@@ -137,15 +138,14 @@ const CreateCustomer = () => {
     payments: Yup.array().of(
       Yup.object().shape({
         date: Yup.date().required("Date is required"),
-        paymentAmount: Yup.number().required("Payment amount is required"),
+        amount: Yup.number().required("Amount is required"),  // Updated validation
         pendingAmount: Yup.number().required("Pending amount is required"),
         paymentType: Yup.string().required("Payment type is required"),
       })
     ),
     membershipDuration: Yup.string().required("Membership duration is required"),
     membershipType: Yup.string().required("Membership type is required"),
-    membershipAmount: Yup.number().required("Membership amount is required"),
-    group: Yup.string().required("Group is required"),
+    membershipAmount: Yup.number().required("Membership amount is required")
   });
 
   const onSubmit = async (values) => {
@@ -258,93 +258,77 @@ const CreateCustomer = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="address">Address</label>
-                <Field as="textarea" id="address" name="address" />
+                <Field type="text" id="address" name="address" />
                 <ErrorMessage name="address" component="div" className="error" />
               </div>
             </div>
 
-            {/* Profile Image Field */}
             <div className="form-group">
               <label htmlFor="profileImage">Profile Image</label>
-              <input
-                type="file"
-                id="profileImage"
-                name="profileImage"
-                accept="image/*"
-                onChange={(event) => {
-                  setFieldValue("profileImage", event.currentTarget.files[0]);
-                }}
-              />
+              <input type="file" id="profileImage" name="profileImage" onChange={(event) => setFieldValue("profileImage", event.currentTarget.files[0])} />
               <ErrorMessage name="profileImage" component="div" className="error" />
             </div>
 
-            {/* Document ID Image Field */}
             <div className="form-group">
               <label htmlFor="documentIdImage">Document ID Image</label>
-              <input
-                type="file"
-                id="documentIdImage"
-                name="documentIdImage"
-                accept="image/*"
-                onChange={(event) => {
-                  setFieldValue("documentIdImage", event.currentTarget.files[0]);
-                }}
-              />
+              <input type="file" id="documentIdImage" name="documentIdImage" onChange={(event) => setFieldValue("documentIdImage", event.currentTarget.files[0])} />
               <ErrorMessage name="documentIdImage" component="div" className="error" />
             </div>
 
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="membershipDuration">Membership Duration</label>
-                <Field type="text" id="membershipDuration" name="membershipDuration" />
+                <Field as="select" id="membershipDuration" name="membershipDuration">
+                  <option value="">Select</option>
+                  <option value="ONE_MONTH">ONE MONTH</option>
+                  <option value="THREE_MONTHS">THREE MONTHS</option>
+				          <option value="SIX_MONTHS">SIX MONTHS</option>
+                  <option value="ONE_YEAR">ONE YEAR</option>
+                  </Field>
                 <ErrorMessage name="membershipDuration" component="div" className="error" />
               </div>
               <div className="form-group">
                 <label htmlFor="membershipType">Membership Type</label>
                 <Field as="select" id="membershipType" name="membershipType">
                   <option value="">Select</option>
-                  <option value="MONTHLY">Monthly</option>
-                  <option value="YEARLY">Yearly</option>
+                  <option value="INDIVIDUAL">INDIVIDUAL</option>
+                  <option value="GROUP">GROUP</option>
                 </Field>
                 <ErrorMessage name="membershipType" component="div" className="error" />
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="membershipAmount">Membership Amount</label>
-                <Field type="number" id="membershipAmount" name="membershipAmount" />
-                <ErrorMessage name="membershipAmount" component="div" className="error" />
-              </div>
-              <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="group">Group</label>
-                <Field as="select" id="group" name="group">
-                  <option value="">Select Group</option>
-                  {groups.map(group => (
-                    <option key={group.id} value={group.id}>
-                      {group.name}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage name="group" component="div" className="error" />
-              </div>
-            </div>
+
+            <div className="form-group">
+              <label htmlFor="membershipAmount">Membership Amount</label>
+              <Field type="number" id="membershipAmount" name="membershipAmount" />
+              <ErrorMessage name="membershipAmount" component="div" className="error" />
             </div>
 
-            <FieldArray name="payments">
+            <div className="form-group">
+              <label htmlFor="group">Group</label>
+              <Field as="select" id="group" name="group">
+                <option value="">Select a group</option>
+                {groups.map(group => (
+                  <option key={group.id} value={group.id}>{group.name}</option>
+                ))}
+              </Field>
+              <ErrorMessage name="group" component="div" className="error" />
+            </div>
+
+                       <FieldArray name="payments">
               {({ push, remove }) => (
                 <>
                   {values.payments.map((payment, index) => (
-                    <div key={index} className="payment-form-row">
+                    <div key={index} className="form-row">
                       <div className="form-group">
-                        <label htmlFor={`payments.${index}.date`}>Date</label>
+                        <label htmlFor={`payments.${index}.date`}>Payment Date</label>
                         <Field type="date" name={`payments.${index}.date`} />
                         <ErrorMessage name={`payments.${index}.date`} component="div" className="error" />
                       </div>
                       <div className="form-group">
-                        <label htmlFor={`payments.${index}.paymentAmount`}>Payment Amount</label>
-                        <Field type="number" name={`payments.${index}.paymentAmount`} />
-                        <ErrorMessage name={`payments.${index}.paymentAmount`} component="div" className="error" />
+                        <label htmlFor={`payments.${index}.amount`}>Payment Amount</label>
+                        <Field type="number" name={`payments.${index}.amount`} /> {/* Changed to amount */}
+                        <ErrorMessage name={`payments.${index}.amount`} component="div" className="error" />
                       </div>
                       <div className="form-group">
                         <label htmlFor={`payments.${index}.pendingAmount`}>Pending Amount</label>
@@ -360,18 +344,16 @@ const CreateCustomer = () => {
                         </Field>
                         <ErrorMessage name={`payments.${index}.paymentType`} component="div" className="error" />
                       </div>
-                      <div className="remove-payment-btn">
-                        <button type="button" onClick={() => remove(index)}>Remove</button>
-                      </div>
+                      <button type="button" className="remove-payment-btn" onClick={() => remove(index)}>Remove Payment</button>
                     </div>
                   ))}
-                  <button type="button" onClick={() => push({ date: "", paymentAmount: "", pendingAmount: "", paymentType: "" })}>
+                  <button type="button" className="add-payment-btn" onClick={() => push({ date: "", amount: "", pendingAmount: "", paymentType: "" })}>
                     Add Payment
                   </button>
                 </>
               )}
             </FieldArray>
-            <button type="submit">Submit</button>
+            <button type="submit" className="submit-btn">Create Customer</button>
           </Form>
         )}
       </Formik>
