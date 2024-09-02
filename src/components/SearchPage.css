@@ -1,26 +1,70 @@
+.search-page {
+    padding: 20px;
+}
+
 .tab-container {
-    display: flex;
-    justify-content: space-around;
     margin-bottom: 20px;
 }
 
 .tab-container button {
     padding: 10px 20px;
+    margin-right: 5px;
+    border: none;
     cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    background-color: #f1f1f1;
 }
 
-.tab-container .active-tab {
+.active-tab {
     background-color: #007bff;
     color: white;
-    border-color: #007bff;
 }
 
 .form-section {
-    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.field-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.field-column {
+    flex: 1;
+    margin-right: 10px;
+    min-width: 200px;
 }
 
 .search-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.results-section {
     margin-top: 20px;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.results-table th {
+    background-color: #f2f2f2;
+}
+
+.select-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useHistory } from "react-router-dom"; // Import useHistory
 import "./SearchPage.css";
 
 // Mock data for search results (Replace with actual API data)
@@ -25,6 +26,7 @@ const mockData = [
 const SearchPage = () => {
     const [results, setResults] = useState([]);
     const [activeTab, setActiveTab] = useState("fullText"); // Default to full-text search
+    const history = useHistory(); // Use useHistory hook for navigation
 
     const initialValues = {
         freeText: "",
@@ -60,7 +62,6 @@ const SearchPage = () => {
 
     const handleSearch = (values) => {
         // Implement your search logic here (API calls or filtering mock data)
-        // For demonstration, we're filtering the mock data
         let filteredResults = [];
 
         if (activeTab === "fullText") {
@@ -88,6 +89,11 @@ const SearchPage = () => {
         }
 
         setResults(filteredResults);
+    };
+
+    const handleSelectCustomer = (customer) => {
+        // Navigate to the UpdateCustomer page with selected customer details
+        history.push(`/update-customer/${customer.registrationId}`, { customer });
     };
 
     return (
@@ -208,6 +214,7 @@ const SearchPage = () => {
                                 <th>Membership Amount</th>
                                 <th>Membership Duration</th>
                                 <th>Group</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -225,12 +232,20 @@ const SearchPage = () => {
                                     <td>{item.membershipAmount}</td>
                                     <td>{item.membershipDuration}</td>
                                     <td>{item.group}</td>
+                                    <td>
+                                        <button
+                                            className="select-button"
+                                            onClick={() => handleSelectCustomer(item)}
+                                        >
+                                            Select
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 ) : (
-                    <p>No results found.</p>
+                    <p>No results found</p>
                 )}
             </div>
         </div>
