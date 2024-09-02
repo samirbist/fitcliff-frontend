@@ -1,47 +1,102 @@
-.search-page {
-    padding: 20px;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
+.search-page {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2,
+h3 {
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Tab Styles */
 .tab-container {
+    display: flex;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
 .tab-container button {
-    padding: 10px 20px;
-    margin-right: 5px;
+    flex: 1;
+    padding: 10px;
+    background-color: #e7e7e7;
     border: none;
+    border-radius: 5px;
+    margin: 0 5px;
     cursor: pointer;
-    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    color: #555;
 }
 
-.active-tab {
-    background-color: #007bff;
-    color: white;
+.tab-container button.active-tab,
+.tab-container button:hover {
+    background-color: #4CAF50;
+    color: #fff;
 }
 
+/* Form Styles */
 .form-section {
     margin-bottom: 20px;
 }
 
-.field-row {
-    display: flex;
-    flex-wrap: wrap;
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
 }
 
-.field-column {
-    flex: 1;
-    margin-right: 10px;
-    min-width: 200px;
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .search-button {
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
+.search-button:hover {
+    background-color: #45a049;
+}
+
+/* Error Message Styles */
+.error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Results Section */
 .results-section {
     margin-top: 20px;
 }
@@ -49,22 +104,58 @@
 .results-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 15px;
 }
 
 .results-table th,
 .results-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
+    text-align: left;
 }
 
 .results-table th {
     background-color: #f2f2f2;
+    font-weight: bold;
 }
 
-.select-button {
-    background-color: #28a745;
+.results-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.results-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Button */
+.action-button {
+    background-color: #007BFF;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+/* Field Row Styles */
+.field-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.field-column {
+    flex: 1;
+    min-width: 150px;
+    margin-right: 20px;
+}
+
+.field-column:last-child {
+    margin-right: 0;
 }

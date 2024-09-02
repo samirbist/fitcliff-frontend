@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useHistory } from "react-router-dom"; // Import useHistory
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./SearchPage.css";
 
 // Mock data for search results (Replace with actual API data)
@@ -26,7 +26,7 @@ const mockData = [
 const SearchPage = () => {
     const [results, setResults] = useState([]);
     const [activeTab, setActiveTab] = useState("fullText"); // Default to full-text search
-    const history = useHistory(); // Use useHistory hook for navigation
+    const navigate = useNavigate(); // Use useNavigate hook for navigation
 
     const initialValues = {
         freeText: "",
@@ -61,11 +61,9 @@ const SearchPage = () => {
     });
 
     const handleSearch = (values) => {
-        // Implement your search logic here (API calls or filtering mock data)
         let filteredResults = [];
 
         if (activeTab === "fullText") {
-            // Full-text search logic
             filteredResults = mockData.filter((item) =>
                 Object.values(item).some(
                     (val) =>
@@ -73,7 +71,6 @@ const SearchPage = () => {
                 )
             );
         } else if (activeTab === "fieldSearch") {
-            // Field search logic
             filteredResults = mockData.filter((item) =>
                 Object.keys(values).some(
                     (key) =>
@@ -82,7 +79,6 @@ const SearchPage = () => {
                 )
             );
         } else if (activeTab === "groupSearch") {
-            // Group search logic
             filteredResults = mockData.filter((item) =>
                 item.group.toLowerCase().includes(values.group.toLowerCase())
             );
@@ -93,7 +89,7 @@ const SearchPage = () => {
 
     const handleSelectCustomer = (customer) => {
         // Navigate to the UpdateCustomer page with selected customer details
-        history.push(`/update-customer/${customer.registrationId}`, { customer });
+        navigate(`/update-customer/${customer.registrationId}`, { state: { customer } });
     };
 
     return (
@@ -234,7 +230,7 @@ const SearchPage = () => {
                                     <td>{item.group}</td>
                                     <td>
                                         <button
-                                            className="select-button"
+                                            className="action-button"
                                             onClick={() => handleSelectCustomer(item)}
                                         >
                                             Select
@@ -245,7 +241,7 @@ const SearchPage = () => {
                         </tbody>
                     </table>
                 ) : (
-                    <p>No results found</p>
+                    <p>No results found.</p>
                 )}
             </div>
         </div>

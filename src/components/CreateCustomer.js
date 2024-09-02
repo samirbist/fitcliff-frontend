@@ -123,26 +123,26 @@ const CreateCustomer = () => {
 
   const validationSchema = Yup.object({
     firstname: Yup.string().required("First name is required"),
-    lastname: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+   /* lastname: Yup.string().required("Last name is required"),
+    email: Yup.string().email("Invalid email format").required("Email is required"),*/
     phones: Yup.array()
       .of(Yup.string().required("Phone number is required"))
       .min(1, "At least one phone number is required"),
     gender: Yup.string().required("Gender is required"),
-    regDate: Yup.date().required("Registration date is required"),
+    /*  regDate: Yup.date().required("Registration date is required"),*/
     joinDate: Yup.date().required("Join date is required"),
     birthdate: Yup.date().required("Birthdate is required"),
     address: Yup.string().required("Address is required"),
     profileImage: Yup.mixed().required("Profile image is required"),
     documentIdImage: Yup.mixed().required("Document ID image is required"),
-    payments: Yup.array().of(
+  /*  payments: Yup.array().of(
       Yup.object().shape({
         date: Yup.date().required("Date is required"),
         amount: Yup.number().required("Amount is required"),  // Updated validation
         pendingAmount: Yup.number().required("Pending amount is required"),
         paymentType: Yup.string().required("Payment type is required"),
       })
-    ),
+    ),*/
     membershipDuration: Yup.string().required("Membership duration is required"),
     membershipType: Yup.string().required("Membership type is required"),
     membershipAmount: Yup.number().required("Membership amount is required")
@@ -170,7 +170,7 @@ const CreateCustomer = () => {
         membershipDuration: values.membershipDuration,
         membershipType: values.membershipType,
         membershipAmount: values.membershipAmount,
-        group: values.group,
+        group: values.group ? { id: values.group } : null,
       };
 
       await createCustomer(customerData);

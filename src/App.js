@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode'; // Correct import statement
 import './App.css';
 
 function App() {
-  // Check if the user is authenticated
+  // Check if the user iss authenticated
   const token = localStorage.getItem('jwtToken');
   let isAuthenticated = false;
 
