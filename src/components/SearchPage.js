@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios
 import "./SearchPage.css";
 
-// Mock data for search results (Replace with actual API data)
+const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
+
 const mockData = [
     {
         registrationId: "001",
@@ -26,7 +28,7 @@ const mockData = [
 const SearchPage = () => {
     const [results, setResults] = useState([]);
     const [activeTab, setActiveTab] = useState("fullText"); // Default to full-text search
-    const navigate = useNavigate(); // Use useNavigate hook for navigation
+    const navigate = useNavigate();
 
     const initialValues = {
         freeText: "",
@@ -60,16 +62,27 @@ const SearchPage = () => {
         group: Yup.string(),
     });
 
-    const handleSearch = (values) => {
+    const handleSearch = async (values) => {
         let filteredResults = [];
 
-        if (activeTab === "fullText") {
-            filteredResults = mockData.filter((item) =>
-                Object.values(item).some(
-                    (val) =>
-                        val.toString().toLowerCase().includes(values.freeText.toLowerCase())
-                )
-            );
+        if (activeTab === "fullText" && values.freeText.trim() !== "") {
+            // Get the JWT token from local storage or any other secure storage
+            const token = localStorage.getItem("jwtToken"); // Example: Retrieve token from local storage
+
+            try {
+                const response = await axios.get(`${API_BASE_URL}/admin/customer/search/${values.freeText}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Set the Authorization header with the token
+                    }
+                });
+
+                if (response.status === 200) {
+                    filteredResults = response.data; // Assuming the API returns a list of customers
+                }
+            } catch (error) {
+                console.error("Error fetching search results:", error);
+                // Handle errors appropriately (e.g., show error message)
+            }
         } else if (activeTab === "fieldSearch") {
             filteredResults = mockData.filter((item) =>
                 Object.keys(values).some(
@@ -88,7 +101,6 @@ const SearchPage = () => {
     };
 
     const handleSelectCustomer = (customer) => {
-        // Navigate to the UpdateCustomer page with selected customer details
         navigate(`/update-customer/${customer.registrationId}`, { state: { customer } });
     };
 
