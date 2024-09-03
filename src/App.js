@@ -5,11 +5,11 @@ import CreateCustomer from './components/CreateCustomer';
 import SearchPage from './components/SearchPage'; // Import your search page
 import Layout from './components/Layout'; // Layout that includes the SideMenu
 import CreateGroup from './components/CreateGroupForm';
-import { jwtDecode } from 'jwt-decode'; // Correct import statement
+import { jwtDecode } from 'jwt-decode';
 import './App.css';
 
 function App() {
-  // Check if the user iss authenticated
+  // Check if the user is authenticated
   const token = localStorage.getItem('jwtToken');
   let isAuthenticated = false;
 
