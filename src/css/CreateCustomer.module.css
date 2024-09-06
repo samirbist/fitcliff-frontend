@@ -1,6 +1,6 @@
 /* Container for the entire form */
 .create-customer-form {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
@@ -14,27 +14,28 @@
   text-align: center;
   color: #333;
   margin-bottom: 20px;
-  font-size: 1.5em;
+  font-size: 1.75em;
 }
 
 /* Form row styling */
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 /* Form group styling */
 .form-group {
   flex: 1;
-  min-width: 220px;
+  min-width: 220px; /* Adjust width for better alignment */
+  margin-bottom: 15px;
 }
 
 /* Label styling */
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 500;
   color: #666;
 }
@@ -43,7 +44,7 @@
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 0.875em;
@@ -68,8 +69,8 @@
 .add-payment-btn,
 .remove-payment-btn,
 .submit-btn {
-  font-size: 0.75em;
-  padding: 6px 12px;
+  font-size: 0.875em;
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -79,19 +80,16 @@
 
 .add-phone-btn,
 .add-payment-btn {
-  background-color: #28a745;
-  /* Green */
+  background-color: #28a745; /* Green */
 }
 
 .remove-phone-btn,
 .remove-payment-btn {
-  background-color: #dc3545;
-  /* Red */
+  background-color: #dc3545; /* Red */
 }
 
 .submit-btn {
-  background-color: #007bff;
-  /* Blue */
+  background-color: #007bff; /* Blue */
   display: block;
   width: 100%;
   margin-top: 20px;
@@ -100,19 +98,16 @@
 /* Button hover effects */
 .add-phone-btn:hover,
 .add-payment-btn:hover {
-  background-color: #218838;
-  /* Darker Green */
+  background-color: #218838; /* Darker Green */
 }
 
 .remove-phone-btn:hover,
 .remove-payment-btn:hover {
-  background-color: #c82333;
-  /* Darker Red */
+  background-color: #c82333; /* Darker Red */
 }
 
 .submit-btn:hover {
-  background-color: #0069d9;
-  /* Darker Blue */
+  background-color: #0069d9; /* Darker Blue */
 }
 
 /* Button active effects */
@@ -130,18 +125,6 @@
   transform: scale(0.95);
 }
 
-/* Select styling */
-.form-group select {
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-
-/* File input styling */
-input[type="file"] {
-  padding: 0;
-  border: none;
-}
-
 /* Payment section styling */
 .payment-section {
   margin-top: 20px;
@@ -153,4 +136,24 @@ input[type="file"] {
 
 .payment-section .form-row .form-group {
   width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-group {
+    min-width: 100%;
+  }
+  
+  .form-group input,
+  .form-group select {
+    font-size: 1em; /* Increase font size for better readability on smaller screens */
+  }
+  
+  .submit-btn {
+    padding: 12px; /* Adjust padding for larger touch targets on mobile */
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './SideMenu.css';
+import { useNavigate } from 'react-router-dom';
+import styles from '../css/SideMenu.module.css';
 import logo from '../assests/fitcliff-logo.jpeg'; 
 
 function SideMenu() {
@@ -21,28 +21,27 @@ function SideMenu() {
   };
 
   return (
-    <div className="side-menu">
-       {/* Logo Section */}
-      <div className="logo-container">
-        <img src={logo} alt="Fitcliff Logo" className="logo" />
+    <div className={styles.sideMenu}>
+      {/* Logo Section */}
+      <div className={styles.logoContainer}>
+        <img src={logo} alt="Fitcliff Logo" className={styles.logo} />
       </div>
 
       <ul>
-        
         <li
-          className={activePage === 'SearchPage' ? 'active' : ''}
+          className={activePage === 'SearchPage' ? styles.active : ''}
           onClick={() => handleClick('SearchPage')}
         >
           Search Customers
         </li>
         <li
-          className={activePage === 'CreateCustomer' ? 'active' : ''}
+          className={activePage === 'CreateCustomer' ? styles.active : ''}
           onClick={() => handleClick('CreateCustomer')}
         >
           Create Customer
         </li>
-          <li
-          className={activePage === 'CreateGroup' ? 'active' : ''}
+        <li
+          className={activePage === 'CreateGroup' ? styles.active : ''}
           onClick={() => handleClick('CreateGroup')}
         >
           Create Group

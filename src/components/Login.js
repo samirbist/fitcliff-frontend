@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Login.css'; // Import the CSS file
+import styles from '../css/Login.module.css'; // Import the CSS module
 import logo from '../assests/fitcliff-logo.jpeg';
 
 const Login = () => {
@@ -21,7 +21,7 @@ const Login = () => {
         localStorage.setItem('jwtToken', response.data.jwtToken);
         navigate('/search');
       } else {
-        setError('Login failed, please check User name or Password');
+        setError('Login failed, please check username or password');
       }
     } catch (error) {
       setError(error.response ? error.response.data : error.message);
@@ -29,11 +29,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-logo">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginLogo}>
         <img src={logo} alt="Fitcliff Logo" />
       </div>
-      <div className="login-form">
+      <div className={styles.loginForm}>
         <h1>Welcome to Fitcliff</h1>
         <h2>Login</h2>
         <input 
@@ -49,7 +49,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)} 
         />
         <button onClick={handleLogin}>Login</button>
-        {error && <p className="error">{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </div>
   );

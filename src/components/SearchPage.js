@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./SearchPage.css";
+import styles from "../css/SearchPage.module.css";
 
 const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
 
@@ -25,7 +25,8 @@ const SearchPage = () => {
         birthdate: "",
         address: "",
         membershipAmount: "",
-        membershipDuration: ""
+        membershipDuration: "",
+        group: ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -39,7 +40,8 @@ const SearchPage = () => {
         birthdate: Yup.date(),
         address: Yup.string(),
         membershipAmount: Yup.string(),
-        membershipDuration: Yup.string().oneOf(["ONE_MONTH", "THREE_MONTHS", "SIX_MONTHS", "ONE_YEAR"])
+        membershipDuration: Yup.string().oneOf(["ONE_MONTH", "THREE_MONTHS", "SIX_MONTHS", "ONE_YEAR"]),
+        group: Yup.string()
     });
 
     const handleTabChange = (tab) => {
@@ -170,16 +172,25 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="search-page">
+        <div className={styles.searchPage}>
             <h2>Customer Search</h2>
-            <div className="tab-container">
-                <button className={activeTab === "fullText" ? "active-tab" : ""} onClick={() => handleTabChange("fullText")}>
+            <div className={styles.tabContainer}>
+                <button 
+                    className={activeTab === "fullText" ? styles.activeTab : ""} 
+                    onClick={() => handleTabChange("fullText")}
+                >
                     Full Text Search
                 </button>
-                <button className={activeTab === "fieldSearch" ? "active-tab" : ""} onClick={() => handleTabChange("fieldSearch")}>
+                <button 
+                    className={activeTab === "fieldSearch" ? styles.activeTab : ""} 
+                    onClick={() => handleTabChange("fieldSearch")}
+                >
                     Field Search
                 </button>
-                <button className={activeTab === "groupSearch" ? "active-tab" : ""} onClick={() => handleTabChange("groupSearch")}>
+                <button 
+                    className={activeTab === "groupSearch" ? styles.activeTab : ""} 
+                    onClick={() => handleTabChange("groupSearch")}
+                >
                     Group Search
                 </button>
             </div>
@@ -192,31 +203,31 @@ const SearchPage = () => {
                 {({ handleSubmit }) => (
                     <Form onSubmit={handleSubmit}>
                         {activeTab === "fullText" && (
-                            <div className="form-section">
+                            <div className={styles.formSection}>
                                 <label>Free Text Search</label>
                                 <Field name="freeText" type="text" placeholder="Search..." />
-                                <ErrorMessage name="freeText" component="div" className="error-message" />
-                                <button type="submit" className="search-button">Search</button>
+                                <ErrorMessage name="freeText" component="div" className={styles.errorMessage} />
+                                <button type="submit" className={styles.searchButton}>Search</button>
                             </div>
                         )}
 
                         {activeTab === "fieldSearch" && (
-                            <div className="form-section">
+                            <div className={styles.formSection}>
                                 <h3>Field Search</h3>
-                                <div className="field-row">
-                                    <div className="field-column">
+                                <div className={styles.fieldRow}>
+                                    <div className={styles.fieldColumn}>
                                         <label>First Name</label>
                                         <Field name="firstName" type="text" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Last Name</label>
                                         <Field name="lastName" type="text" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Email</label>
                                         <Field name="email" type="email" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Gender</label>
                                         <Field name="gender" as="select">
                                             <option value="">Select</option>
@@ -225,30 +236,30 @@ const SearchPage = () => {
                                         </Field>
                                     </div>
                                 </div>
-                                <div className="field-row">
-                                    <div className="field-column">
+                                <div className={styles.fieldRow}>
+                                    <div className={styles.fieldColumn}>
                                         <label>Registration Date</label>
                                         <Field name="regDate" type="date" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Join Date</label>
                                         <Field name="joinDate" type="date" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Birthdate</label>
                                         <Field name="birthdate" type="date" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Address</label>
                                         <Field name="address" type="text" />
                                     </div>
                                 </div>
-                                <div className="field-row">
-                                    <div className="field-column">
+                                <div className={styles.fieldRow}>
+                                    <div className={styles.fieldColumn}>
                                         <label>Membership Amount</label>
                                         <Field name="membershipAmount" type="text" />
                                     </div>
-                                    <div className="field-column">
+                                    <div className={styles.fieldColumn}>
                                         <label>Membership Duration</label>
                                         <Field name="membershipDuration" as="select">
                                             <option value="">Select</option>
@@ -259,26 +270,26 @@ const SearchPage = () => {
                                         </Field>
                                     </div>
                                 </div>
-                                <button type="submit" className="search-button">Search</button>
+                                <button type="submit" className={styles.searchButton}>Search</button>
                             </div>
                         )}
 
                         {activeTab === "groupSearch" && (
-                            <div className="form-section">
+                            <div className={styles.formSection}>
                                 <label>Group</label>
                                 <Field name="group" type="text" placeholder="Enter group name" />
-                                <ErrorMessage name="group" component="div" className="error-message" />
-                                <button type="submit" className="search-button">Search</button>
+                                <ErrorMessage name="group" component="div" className={styles.errorMessage} />
+                                <button type="submit" className={styles.searchButton}>Search</button>
                             </div>
                         )}
                     </Form>
                 )}
             </Formik>
 
-            <div className="results-section">
+            <div className={styles.resultsSection}>
                 <h3>Search Results</h3>
                 {getActiveTabResults().length > 0 ? (
-                    <table className="results-table">
+                    <table className={styles.resultsTable}>
                         <thead>
                             <tr>
                                 <th>First Name</th>
@@ -309,7 +320,7 @@ const SearchPage = () => {
                                     <td>{item.membershipDuration}</td>
                                     <td>
                                         <button
-                                            className="action-button"
+                                            className={styles.actionButton}
                                             onClick={() => handleSelectCustomer(item)}
                                         >
                                             Select

@@ -1,0 +1,64 @@
+/* SearchPage.module.css */
+
+.searchPage {
+    padding: 20px;
+}
+
+.tabContainer {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.activeTab {
+    font-weight: bold;
+    color: blue;
+}
+
+.formSection {
+    margin-bottom: 20px;
+}
+
+.fieldRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fieldColumn {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.searchButton {
+    margin-top: 10px;
+}
+
+.resultsSection {
+    margin-top: 20px;
+}
+
+.resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.resultsTable th,
+.resultsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.actionButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background-color: #45a049;
+}

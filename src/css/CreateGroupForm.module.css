@@ -1,0 +1,86 @@
+/* CreateGroupForm.module.css */
+
+.createGroupForm {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.createGroupForm h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.formGroup input[type="text"] {
+    width: calc(100% - 16px);
+    /* Adjust for padding */
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.paymentGroup {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+.paymentGroup h2 {
+    margin-top: 0;
+    font-size: 1.125rem;
+    color: #333;
+}
+
+.addButton,
+.removeButton,
+.submitButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.addButton {
+    background-color: #28a745;
+}
+
+.removeButton {
+    background-color: #dc3545;
+}
+
+.submitButton {
+    background-color: #007bff;
+}
+
+.addButton:hover,
+.removeButton:hover,
+.submitButton:hover {
+    opacity: 0.8;
+}
