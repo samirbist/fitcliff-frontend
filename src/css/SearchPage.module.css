@@ -2,63 +2,158 @@
 
 .searchPage {
     padding: 20px;
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
 }
 
 .tabContainer {
     display: flex;
     margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
 }
 
 .activeTab {
     font-weight: bold;
-    color: blue;
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 8px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.inactiveTab {
+    color: #555;
+    margin-right: 15px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.inactiveTab:hover {
+    color: #007bff;
 }
 
 .formSection {
+    background-color: #fff;
+    padding: 20px;
     margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .fieldRow {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 .fieldColumn {
     flex: 1;
-    margin-right: 10px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.fieldColumn:last-child {
+    margin-right: 0;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .errorMessage {
-    color: red;
+    color: #e74c3c;
+    margin-top: 5px;
+    font-size: 12px;
 }
 
 .searchButton {
-    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.searchButton:hover {
+    background-color: #218838;
 }
 
 .resultsSection {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .resultsTable {
     width: 100%;
     border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .resultsTable th,
 .resultsTable td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.resultsTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.resultsTable td {
+    background-color: #fff;
+}
+
+.resultsTable tr:nth-child(even) td {
+    background-color: #f9f9f9;
 }
 
 .actionButton {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
 .actionButton:hover {
     background-color: #45a049;
+}
+
+.noResultsMessage {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    margin-top: 20px;
 }

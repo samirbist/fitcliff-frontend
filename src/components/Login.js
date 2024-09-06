@@ -8,13 +8,20 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Added loading state
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    setLoading(true); // Start loading
     try {
       const response = await axios.post('http://localhost:8080/auth/login', {
-        username: username,
-        password: password,
+        username,
+        password,
       });
 
       if (response.status === 200 && response.data.jwtToken) {
@@ -25,6 +32,8 @@ const Login = () => {
       }
     } catch (error) {
       setError(error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -41,14 +50,18 @@ const Login = () => {
           placeholder="Username" 
           value={username} 
           onChange={(e) => setUsername(e.target.value)} 
+          aria-label="Username"
         />
         <input 
           type="password" 
           placeholder="Password" 
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
+          aria-label="Password"
         />
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
         {error && <p className={styles.error}>{error}</p>}
       </div>
     </div>

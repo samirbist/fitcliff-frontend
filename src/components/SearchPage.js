@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,39 @@ import styles from "../css/SearchPage.module.css";
 
 const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
 
+const getAuthToken = () => {
+  return localStorage.getItem('jwtToken');
+};
+
+const fetchGroups = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/admin/group`, {
+      headers: {
+        'Authorization': `Bearer ${getAuthToken()}`
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    throw error;
+  }
+};
+
 const SearchPage = () => {
+ const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    const loadGroups = async () => {
+      try {
+        const fetchedGroups = await fetchGroups();
+        setGroups(fetchedGroups);
+      } catch (error) {
+        console.error('Failed to fetch groups:', error);
+      }
+    };
+
+    loadGroups();
+  }, []);
     const [fullTextResults, setFullTextResults] = useState([]);
     const [fieldSearchResults, setFieldSearchResults] = useState([]);
     const [groupSearchResults, setGroupSearchResults] = useState([]);
@@ -60,13 +92,13 @@ const SearchPage = () => {
     };
 
     const handleSearch = async (values) => {
-        const token = localStorage.getItem("jwtToken");
+       
 
         if (activeTab === "fullText" && values.freeText.trim() !== "") {
             try {
                 const response = await axios.get(`${API_BASE_URL}/admin/customer/search/${values.freeText}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${getAuthToken()}`
                     }
                 });
 
@@ -103,7 +135,7 @@ const SearchPage = () => {
                     membershipDuration: values.membershipDuration
                 }, {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${getAuthToken()}`,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -130,7 +162,7 @@ const SearchPage = () => {
             try {
                 const response = await axios.post(`${API_BASE_URL}/admin/customer/search`, { group: values.group }, {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${getAuthToken()}`,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -277,7 +309,12 @@ const SearchPage = () => {
                         {activeTab === "groupSearch" && (
                             <div className={styles.formSection}>
                                 <label>Group</label>
-                                <Field name="group" type="text" placeholder="Enter group name" />
+                                 <Field as="select" id="group" name="group">
+                <option value="">Select a group</option>
+                {groups.map(group => (
+                  <option key={group.id} value={group.id}>{group.name}</option>
+                ))}
+              </Field>
                                 <ErrorMessage name="group" component="div" className={styles.errorMessage} />
                                 <button type="submit" className={styles.searchButton}>Search</button>
                             </div>
