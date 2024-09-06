@@ -9,14 +9,15 @@ const API_BASE_URL = 'http://localhost:8080';
 // Validation Schema
 const validationSchema = Yup.object({
   name: Yup.string().required('Group name is required'),
-  membershipType: Yup.string().oneOf(['INDIVIDUAL', 'GROUP'], 'Invalid membership type').required('Membership type is required'),
+  membershipAmount: Yup.string().required('Membership amount is required'),
   membershipDuration: Yup.string().oneOf(['ONE_MONTH', 'THREE_MONTHS', 'SIX_MONTHS', 'ONE_YEAR'], 'Invalid membership duration').required('Membership duration is required'),
+  date: Yup.date().required('Date is required'), // Top-level date field
   payments: Yup.array().of(
     Yup.object({
       amount: Yup.string().required('Amount is required'),
       paymentType: Yup.string().oneOf(['CASH', 'UPI'], 'Invalid payment type').required('Payment type is required'),
       pendingAmount: Yup.string().required('Pending amount is required'),
-      date: Yup.date().required('Date is required'),
+      date: Yup.date().required('Date is required') // Date field within each payment
     })
   )
 });
@@ -24,9 +25,10 @@ const validationSchema = Yup.object({
 // Initial Values
 const initialValues = {
   name: '',
-  membershipType: '',
+  membershipAmount: '',
   membershipDuration: '',
-  payments: [{ amount: '', paymentType: '', pendingAmount: '', date: '' }]
+  date: '', // Top-level date field
+  payments: [{ amount: '', paymentType: '', pendingAmount: '', date: '' }] // Date field within each payment
 };
 
 const CreateGroupForm = () => {
@@ -58,32 +60,37 @@ const CreateGroupForm = () => {
       >
         {({ values }) => (
           <Form>
-            <div className={styles.formGroup}>
-              <label htmlFor="name">Group Name</label>
-              <Field type="text" id="name" name="name" />
-              <ErrorMessage name="name" component="div" className={styles.error} />
-            </div>
+            <div className={styles['form-row']}>
+              <div className={styles.formGroup}>
+                <label htmlFor="name">Group Name</label>
+                <Field type="text" id="name" name="name" />
+                <ErrorMessage name="name" component="div" className={styles.error} />
+              </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="membershipType">Membership Type</label>
-              <Field as="select" id="membershipType" name="membershipType">
-                <option value="">Select Membership Type</option>
-                <option value="INDIVIDUAL">INDIVIDUAL</option>
-                <option value="GROUP">GROUP</option>
-              </Field>
-              <ErrorMessage name="membershipType" component="div" className={styles.error} />
+              <div className={styles.formGroup}>
+                <label htmlFor="date">Date</label>
+                <Field type="date" id="date" name="date" />
+                <ErrorMessage name="date" component="div" className={styles.error} />
+              </div>
             </div>
+            <div className={styles['form-row']}>
+              <div className={styles.formGroup}>
+                <label htmlFor="membershipAmount">Membership Amount</label>
+                <Field type="text" id="membershipAmount" name="membershipAmount" />
+                <ErrorMessage name="membershipAmount" component="div" className={styles.error} />
+              </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="membershipDuration">Membership Duration</label>
-              <Field as="select" id="membershipDuration" name="membershipDuration">
-                <option value="">Select Membership Duration</option>
-                <option value="ONE_MONTH">ONE MONTH</option>
-                <option value="THREE_MONTHS">THREE MONTHS</option>
-                <option value="SIX_MONTHS">SIX MONTHS</option>
-                <option value="ONE_YEAR">ONE YEAR</option>
-              </Field>
-              <ErrorMessage name="membershipDuration" component="div" className={styles.error} />
+              <div className={styles.formGroup}>
+                <label htmlFor="membershipDuration">Membership Duration</label>
+                <Field as="select" id="membershipDuration" name="membershipDuration">
+                  <option value="">Select Membership Duration</option>
+                  <option value="ONE_MONTH">ONE MONTH</option>
+                  <option value="THREE_MONTHS">THREE MONTHS</option>
+                  <option value="SIX_MONTHS">SIX MONTHS</option>
+                  <option value="ONE_YEAR">ONE YEAR</option>
+                </Field>
+                <ErrorMessage name="membershipDuration" component="div" className={styles.error} />
+              </div>
             </div>
 
             <FieldArray name="payments">
@@ -112,7 +119,7 @@ const CreateGroupForm = () => {
                         <ErrorMessage name={`payments.${index}.pendingAmount`} component="div" className={styles.error} />
                       </div>
                       <div className={styles.formGroup}>
-                        <label htmlFor={`payments.${index}.date`}>Date</label>
+                        <label htmlFor={`payments.${index}.date`}>Payment Date</label>
                         <Field type="date" name={`payments.${index}.date`} />
                         <ErrorMessage name={`payments.${index}.date`} component="div" className={styles.error} />
                       </div>

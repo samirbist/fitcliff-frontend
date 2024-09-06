@@ -122,8 +122,6 @@ const CreateCustomer = () => {
 
   const validationSchema = Yup.object({
     firstname: Yup.string().required("First name is required"),
-    lastname: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
     phone: Yup.string().required("Phone is required"),
     gender: Yup.string().required("Gender is required"),
     regDate: Yup.date().required("Registration date is required"),
@@ -247,18 +245,19 @@ const CreateCustomer = () => {
           </div>
             </div>
 
+          <div className={styles['form-row']}>
             <div className={styles['form-group']}>
               <label htmlFor="profileImage">Profile Image</label>
               <input type="file" id="profileImage" name="profileImage" onChange={(event) => setFieldValue("profileImage", event.currentTarget.files[0])} />
               <ErrorMessage name="profileImage" component="div" className={styles['error']} />
             </div>
 
-            <div className={styles['form-group']}>
+          <div className={styles['form-group']}>
               <label htmlFor="documentIdImage">Document ID Image</label>
               <input type="file" id="documentIdImage" name="documentIdImage" onChange={(event) => setFieldValue("documentIdImage", event.currentTarget.files[0])} />
               <ErrorMessage name="documentIdImage" component="div" className={styles['error']} />
             </div>
-
+          </div>
             <div className={styles['form-row']}>
               <div className={styles['form-group']}>
                 <label htmlFor="membershipDuration">Membership Duration</label>
@@ -281,7 +280,7 @@ const CreateCustomer = () => {
                 <ErrorMessage name="membershipType" component="div" className={styles['error']} />
               </div>
             </div>
-
+          <div className={styles['form-row']}>
             <div className={styles['form-group']}>
               <label htmlFor="membershipAmount">Membership Amount</label>
               <Field type="number" id="membershipAmount" name="membershipAmount" />
@@ -298,7 +297,7 @@ const CreateCustomer = () => {
               </Field>
               <ErrorMessage name="group" component="div" className={styles['error']} />
             </div>
-
+          </div>
             <FieldArray name="payments">
               {({ push, remove }) => (
                 <>

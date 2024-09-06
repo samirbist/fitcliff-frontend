@@ -1,86 +1,156 @@
-/* CreateGroupForm.module.css */
-
+/* Container for the entire form */
 .createGroupForm {
-    padding: 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    background-color: #f4f4f4;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
     border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Header styling */
 .createGroupForm h1 {
     text-align: center;
+    color: #333;
     margin-bottom: 20px;
+    font-size: 1.75em;
 }
 
+/* Form group styling */
 .formGroup {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    /* Increased spacing between fields */
 }
 
+/* Label styling */
 .formGroup label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #666;
 }
 
+/* Input and select field styling */
 .formGroup input,
 .formGroup select {
     width: 100%;
-    padding: 8px;
+    /* Ensure full width */
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 0.875em;
 }
 
-.formGroup input[type="text"] {
-    width: calc(100% - 16px);
-    /* Adjust for padding */
+/* Specific width adjustments */
+#name,
+#membershipAmount,
+#membershipDuration,
+#date {
+    width: calc(100% - 24px);
+    /* Full width minus padding and borders */
 }
 
+/* Minor spacing between fields */
+.formGroup:not(:last-child) {
+    margin-bottom: 20px;
+    /* Space between fields */
+}
+
+/* Error message styling */
 .error {
-    color: red;
-    font-size: 0.875rem;
+    color: #e74c3c;
+    font-size: 0.875em;
     margin-top: 5px;
 }
 
+/* Button styling */
+.addButton,
+.removeButton,
+.submitButton {
+    font-size: 0.875em;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.addButton {
+    background-color: #28a745;
+    /* Green */
+}
+
+.removeButton {
+    background-color: #dc3545;
+    /* Red */
+}
+
+.submitButton {
+    background-color: #007bff;
+    /* Blue */
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Button hover effects */
+.addButton:hover {
+    background-color: #218838;
+    /* Darker Green */
+}
+
+.removeButton:hover {
+    background-color: #c82333;
+    /* Darker Red */
+}
+
+.submitButton:hover {
+    background-color: #0069d9;
+    /* Darker Blue */
+}
+
+/* Button active effects */
+.addButton:active,
+.removeButton:active,
+.submitButton:active {
+    transform: scale(0.95);
+}
+
+/* Payment section styling */
 .paymentGroup {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 15px;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .paymentGroup h2 {
     margin-top: 0;
-    font-size: 1.125rem;
+    font-size: 1.125em;
     color: #333;
 }
 
-.addButton,
-.removeButton,
-.submitButton {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    margin-top: 10px;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
 
-.addButton {
-    background-color: #28a745;
-}
+    .formGroup {
+        min-width: 100%;
+    }
 
-.removeButton {
-    background-color: #dc3545;
-}
+    .formGroup input,
+    .formGroup select {
+        font-size: 1em;
+        /* Increase font size for better readability on smaller screens */
+    }
 
-.submitButton {
-    background-color: #007bff;
-}
-
-.addButton:hover,
-.removeButton:hover,
-.submitButton:hover {
-    opacity: 0.8;
+    .submitButton {
+        padding: 12px;
+        /* Adjust padding for larger touch targets on mobile */
+    }
 }
