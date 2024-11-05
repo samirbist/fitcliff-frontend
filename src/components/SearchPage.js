@@ -8,38 +8,38 @@ import styles from "../css/SearchPage.module.css";
 const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
 
 const getAuthToken = () => {
-  return localStorage.getItem('jwtToken');
+    return localStorage.getItem('jwtToken');
 };
 
-const fetchGroups = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/admin/group`, {
-      headers: {
-        'Authorization': `Bearer ${getAuthToken()}`
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching groups:', error);
-    throw error;
-  }
-};
+// const fetchGroups = async () => {
+//     try {
+//         const response = await axios.get(`${API_BASE_URL}/admin/group`, {
+//             headers: {
+//                 'Authorization': `Bearer ${getAuthToken()}`
+//             },
+//         });
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching groups:', error);
+//         throw error;
+//     }
+// };
 
 const SearchPage = () => {
- const [groups, setGroups] = useState([]);
+    // const [groups, setGroups] = useState([]);
 
-  useEffect(() => {
-    const loadGroups = async () => {
-      try {
-        const fetchedGroups = await fetchGroups();
-        setGroups(fetchedGroups);
-      } catch (error) {
-        console.error('Failed to fetch groups:', error);
-      }
-    };
+    useEffect(() => {
+        // const loadGroups = async () => {
+        //     try {
+        //         const fetchedGroups = await fetchGroups();
+        //         setGroups(fetchedGroups);
+        //     } catch (error) {
+        //         console.error('Failed to fetch groups:', error);
+        //     }
+        // };
 
-    loadGroups();
-  }, []);
+        // loadGroups();
+    }, []);
     const [fullTextResults, setFullTextResults] = useState([]);
     const [fieldSearchResults, setFieldSearchResults] = useState([]);
     const [groupSearchResults, setGroupSearchResults] = useState([]);
@@ -47,6 +47,7 @@ const SearchPage = () => {
     const navigate = useNavigate();
 
     const initialValues = {
+        id: "",
         freeText: "",
         firstName: "",
         lastName: "",
@@ -62,6 +63,7 @@ const SearchPage = () => {
     };
 
     const validationSchema = Yup.object().shape({
+        id: Yup.string(),
         freeText: Yup.string(),
         firstName: Yup.string(),
         lastName: Yup.string(),
@@ -92,7 +94,7 @@ const SearchPage = () => {
     };
 
     const handleSearch = async (values) => {
-       
+
 
         if (activeTab === "fullText" && values.freeText.trim() !== "") {
             try {
@@ -104,6 +106,7 @@ const SearchPage = () => {
 
                 if (response.status === 200) {
                     const filteredResults = response.data.map((customer) => ({
+                        id: customer.id,
                         firstName: customer.firstName,
                         lastName: customer.lastName,
                         email: customer.email,
@@ -123,6 +126,7 @@ const SearchPage = () => {
         } else if (activeTab === "fieldSearch") {
             try {
                 const response = await axios.post(`${API_BASE_URL}/admin/customer/search`, {
+                    id: values.id,
                     firstName: values.firstName,
                     lastName: values.lastName,
                     email: values.email,
@@ -142,6 +146,7 @@ const SearchPage = () => {
 
                 if (response.status === 200) {
                     const filteredResults = response.data.map((customer) => ({
+                        id: customer.id,
                         firstName: customer.firstName,
                         lastName: customer.lastName,
                         email: customer.email,
@@ -207,24 +212,24 @@ const SearchPage = () => {
         <div className={styles.searchPage}>
             <h2>Customer Search</h2>
             <div className={styles.tabContainer}>
-                <button 
-                    className={activeTab === "fullText" ? styles.activeTab : ""} 
+                <button
+                    className={activeTab === "fullText" ? styles.activeTab : ""}
                     onClick={() => handleTabChange("fullText")}
                 >
                     Full Text Search
                 </button>
-                <button 
-                    className={activeTab === "fieldSearch" ? styles.activeTab : ""} 
+                <button
+                    className={activeTab === "fieldSearch" ? styles.activeTab : ""}
                     onClick={() => handleTabChange("fieldSearch")}
                 >
                     Field Search
                 </button>
-                <button 
+                {/* <button 
                     className={activeTab === "groupSearch" ? styles.activeTab : ""} 
                     onClick={() => handleTabChange("groupSearch")}
                 >
                     Group Search
-                </button>
+                </button> */}
             </div>
 
             <Formik
@@ -260,12 +265,8 @@ const SearchPage = () => {
                                         <Field name="email" type="email" />
                                     </div>
                                     <div className={styles.fieldColumn}>
-                                        <label>Gender</label>
-                                        <Field name="gender" as="select">
-                                            <option value="">Select</option>
-                                            <option value="MALE">Male</option>
-                                            <option value="FEMALE">Female</option>
-                                        </Field>
+                                        <label>Customer Id</label>
+                                        <Field name="id" type="text" />
                                     </div>
                                 </div>
                                 <div className={styles.fieldRow}>
@@ -282,6 +283,16 @@ const SearchPage = () => {
                                         <Field name="birthdate" type="date" />
                                     </div>
                                     <div className={styles.fieldColumn}>
+                                        <label>Gender</label>
+                                        <Field name="gender" as="select">
+                                            <option value="">Select</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </Field>
+                                    </div>
+                                </div>
+                                <div className={styles.fieldRow}>
+                                <div className={styles.fieldColumn}>
                                         <label>Address</label>
                                         <Field name="address" type="text" />
                                     </div>
@@ -306,19 +317,19 @@ const SearchPage = () => {
                             </div>
                         )}
 
-                        {activeTab === "groupSearch" && (
+                        {/* {activeTab === "groupSearch" && (
                             <div className={styles.formSection}>
                                 <label>Group</label>
-                                 <Field as="select" id="group" name="group">
-                <option value="">Select a group</option>
-                {groups.map(group => (
-                  <option key={group.id} value={group.id}>{group.name}</option>
-                ))}
-              </Field>
+                                <Field as="select" id="group" name="group">
+                                    <option value="">Select a group</option>
+                                    {groups.map(group => (
+                                        <option key={group.id} value={group.id}>{group.name}</option>
+                                    ))}
+                                </Field>
                                 <ErrorMessage name="group" component="div" className={styles.errorMessage} />
                                 <button type="submit" className={styles.searchButton}>Search</button>
                             </div>
-                        )}
+                        )} */}
                     </Form>
                 )}
             </Formik>

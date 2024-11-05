@@ -1,15 +1,20 @@
 // src/components/PrivateRoute.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from './config/Authconfig';
 
 // Function to get JWT token from localStorage
-const getAuthToken = () => {
-  return localStorage.getItem('jwtToken');
-};
+
 
 const PrivateRoute = ({ children }) => {
-  return getAuthToken() ? children : <Navigate to="/login" />;
+  const authConfig = useAuth();
+
+  useEffect(() => {
+  },[authConfig]);
+
+
+  return authConfig.isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

@@ -6,11 +6,9 @@ import SearchPage from './components/SearchPage'; // Import your search page
 import Layout from './components/Layout'; // Layout that includes the SideMenu
 import CreateGroup from './components/CreateGroupForm';
 import './App.css';
-import { useAuth } from './config/Authconfig';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
-  
-  const isAuthenticated = useAuth();
 
   return (
     <Router>
@@ -20,24 +18,46 @@ function App() {
 
         {/* Protected Routes with Layout */}
         <Route
-          path="*"
+          path="/"
           element={
-            isAuthenticated ? (
+            <PrivateRoute>
               <Layout>
-                <Routes>
-                  {/* Redirect to search page after  login */}
-                  <Route path="/" element={<Navigate to="/search" />} />
-                  <Route path="/create-customer" element={<CreateCustomer />} />
-                  <Route path="/search" element={<SearchPage />} /> {/* Your search page route */}
-                  <Route path="/create-group" element={<CreateGroup />} /> {/* Add the CreateGroup route */}
-                  {/* Add more routes as needed */}
-                </Routes>
+                <Navigate to="/search" />
               </Layout>
-            ) : (
-              <Navigate to="/login" />
-            )
+            </PrivateRoute>
           }
         />
+        <Route
+          path="/create-customer"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <CreateCustomer />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <SearchPage />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/create-group"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <CreateGroup />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );

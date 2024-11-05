@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import React, { useEffect } from 'react';
+import * as Yup from "yup";
 import styles from "../css/CreateCustomer.module.css";
 
 const API_BASE_URL = 'http://localhost:8080'; // Replace with your actual API base URL
@@ -63,37 +63,37 @@ const createCustomer = async (customerData) => {
   }
 };
 
-const fetchGroups = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/admin/group`, {
-      headers: {
-        'Authorization': `Bearer ${getAuthToken()}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching groups:', error);
-    throw error;
-  }
-};
+// const fetchGroups = async () => {
+//   try {
+//     const response = await axios.get(`${API_BASE_URL}/admin/group`, {
+//       headers: {
+//         'Authorization': `Bearer ${getAuthToken()}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error fetching groups:', error);
+//     throw error;
+//   }
+// };
 
 const CreateCustomer = () => {
 
-  const [groups, setGroups] = useState([]);
+  //const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    const loadGroups = async () => {
-      try {
-        const fetchedGroups = await fetchGroups();
-        setGroups(fetchedGroups);
-      } catch (error) {
-        console.error('Failed to fetch groups:', error);
-      }
-    };
+    // const loadGroups = async () => {
+    //   try {
+    //     const fetchedGroups = await fetchGroups();
+    //     setGroups(fetchedGroups);
+    //   } catch (error) {
+    //     console.error('Failed to fetch groups:', error);
+    //   }
+    // };
 
-    loadGroups();
+    // loadGroups();
   }, []);
-  
+
   const initialValues = {
     firstname: "",
     lastname: "",
@@ -215,11 +215,11 @@ const CreateCustomer = () => {
               </div>
             </div>
 
-          <div className={styles['form-group']}>
-                <label htmlFor="address">Address</label>
-                <Field type="text" id="address" name="address" />
-                <ErrorMessage name="address" component="div" className={styles['error']} />
-          </div>
+            <div className={styles['form-group']}>
+              <label htmlFor="address">Address</label>
+              <Field type="text" id="address" name="address" />
+              <ErrorMessage name="address" component="div" className={styles['error']} />
+            </div>
             <div className={styles['form-row']}>
               <div className={styles['form-group']}>
                 <label htmlFor="regDate">Registration Date</label>
@@ -242,22 +242,22 @@ const CreateCustomer = () => {
                 <label htmlFor="phone">Phone</label>
                 <Field type="phone" id="phone" name="phone" />
                 <ErrorMessage name="phone" component="div" className={styles['error']} />
-          </div>
+              </div>
             </div>
 
-          <div className={styles['form-row']}>
-            <div className={styles['form-group']}>
-              <label htmlFor="profileImage">Profile Image</label>
-              <input type="file" id="profileImage" name="profileImage" onChange={(event) => setFieldValue("profileImage", event.currentTarget.files[0])} />
-              <ErrorMessage name="profileImage" component="div" className={styles['error']} />
-            </div>
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
+                <label htmlFor="profileImage">Profile Image</label>
+                <input type="file" id="profileImage" name="profileImage" onChange={(event) => setFieldValue("profileImage", event.currentTarget.files[0])} />
+                <ErrorMessage name="profileImage" component="div" className={styles['error']} />
+              </div>
 
-          <div className={styles['form-group']}>
-              <label htmlFor="documentIdImage">Document ID Image</label>
-              <input type="file" id="documentIdImage" name="documentIdImage" onChange={(event) => setFieldValue("documentIdImage", event.currentTarget.files[0])} />
-              <ErrorMessage name="documentIdImage" component="div" className={styles['error']} />
+              <div className={styles['form-group']}>
+                <label htmlFor="documentIdImage">Document ID Image</label>
+                <input type="file" id="documentIdImage" name="documentIdImage" onChange={(event) => setFieldValue("documentIdImage", event.currentTarget.files[0])} />
+                <ErrorMessage name="documentIdImage" component="div" className={styles['error']} />
+              </div>
             </div>
-          </div>
             <div className={styles['form-row']}>
               <div className={styles['form-group']}>
                 <label htmlFor="membershipDuration">Membership Duration</label>
@@ -267,7 +267,7 @@ const CreateCustomer = () => {
                   <option value="THREE_MONTHS">THREE MONTHS</option>
                   <option value="SIX_MONTHS">SIX MONTHS</option>
                   <option value="ONE_YEAR">ONE YEAR</option>
-                  </Field>
+                </Field>
                 <ErrorMessage name="membershipDuration" component="div" className={styles['error']} />
               </div>
               <div className={styles['form-group']}>
@@ -280,14 +280,14 @@ const CreateCustomer = () => {
                 <ErrorMessage name="membershipType" component="div" className={styles['error']} />
               </div>
             </div>
-          <div className={styles['form-row']}>
-            <div className={styles['form-group']}>
-              <label htmlFor="membershipAmount">Membership Amount</label>
-              <Field type="number" id="membershipAmount" name="membershipAmount" />
-              <ErrorMessage name="membershipAmount" component="div" className={styles['error']} />
-            </div>
+            <div className={styles['form-row']}>
+              <div className={styles['form-group']}>
+                <label htmlFor="membershipAmount">Membership Amount</label>
+                <Field type="number" id="membershipAmount" name="membershipAmount" />
+                <ErrorMessage name="membershipAmount" component="div" className={styles['error']} />
+              </div>
 
-            <div className={styles['form-group']}>
+              {/* <div className={styles['form-group']}>
               <label htmlFor="group">Group</label>
               <Field as="select" id="group" name="group">
                 <option value="">Select a group</option>
@@ -296,8 +296,8 @@ const CreateCustomer = () => {
                 ))}
               </Field>
               <ErrorMessage name="group" component="div" className={styles['error']} />
+            </div> */}
             </div>
-          </div>
             <FieldArray name="payments">
               {({ push, remove }) => (
                 <>
